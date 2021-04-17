@@ -1,0 +1,9 @@
+site_name: Thumbnail test
+docs_dir: docs
+site_dir: ../test.site
+
+nav:
+    - Home: index.md
+
+plugins:
+    - thumbnail-maker
