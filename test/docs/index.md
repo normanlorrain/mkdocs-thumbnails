@@ -9,9 +9,9 @@ Theseus, concipit [irata opprobria](https://www.thelatinlibrary.com/catullus.sht
 
 
 
-* [one](one.pdf){ASDF}
-* *[two](two.pdf)*
-* *[three](three.pdf)*
+* [one](one.pdf){#THUMBNAIL}
+* [two](two.pdf){#THUMBNAIL}
+* [three](three.pdf){#THUMBNAIL}
 
 ## In sum aere parvo semper gratia licet
 

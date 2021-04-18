@@ -13,37 +13,43 @@ from pathlib import Path
 
 from . import thumbnail
 
-# Goal: have an "extension" to markdown to precede a link to PDF with a thumbnail image of the PDF.
-# Method: wrap any link that needs a thumbnail with "*".  This will show up as italic without this (backward compatible)
-# when extension is enabled, this regex will catch it, allowing for a proper substitition
-# 
+# Goal: have a means in our markdown to indicate the desire for PDF links 
+# to have a thumbnail, automatically generated.
 #
-
-# Regex: \*\[(.*?)\]\((.*?)\)\*
-# Substitution: ![thumbnail:\1](\1-thumb.jpg)  [\1](\2)  
+# Method: use a special attribute (supported by Python's Attribute Lists) 
+# https://python-markdown.github.io/extensions/attr_list/
 # 
+# eg [foo](bar.pdf){#THUMBNAIL}   (Markdown)
+#    becomes
+#    <a href="bar.pdf" id="THUMBNAIL">foo</a>   (HTML)
+# in the on_page_content() below, we can search the HTML for this pattern and 
+# modify the HTML before it's written to disk, AND, generate the required thumbnail
 # eg:
-#  *[foo](bar.pdf)*
+#  <a href="bar.pdf" id="THUMBNAIL">foo</a>
 # becomes
-# ![thumbnail:foo](bar-thumb.png)  [foo](bar.pdf)  
-# 
-# now the downstream markdown conversion will do what we want
+# <a href="bar.pdf"><img src="bar.pdf-thumb.png" />foo</a> 
 
 
+# Regex: look for "thumbnail" in attribute of a link
+regex=re.compile(r'<a.*?href=\"(.*?)\".*?id=\"THUMBNAIL\">(.*?)<\/a>')
+# Substitution:  
+sub = r'<a href="\1"><img src="\1-thumb.png" class="thumbnail" />\2</a>'
 
 
-exp = re.compile(r'\*\[(.*?)\]\((.*?)\)\*')
+# Style for this class goes into CSS.  e.g. style="margin-top:5px;margin-bottom:5px;margin-right:25px"
+
+
 
 
 class ThumbnailMaker(BasePlugin):
 
-    def on_page_markdown(self, markdown, **kwargs):
+    def on_page_content(self, html, **kwargs):
         srcDir = Path(kwargs['page'].file.abs_src_path).parent
         tgtDir = Path(kwargs['page'].file.abs_dest_path).parent
 
-        targets = exp.findall(markdown)
-        for title, link in targets:
+        targets = regex.findall(html)
+        for link, title in targets:
             thumbnail.create(srcDir/Path(link), tgtDir/Path(link+"-thumb.png"))
-        markdown2 = exp.sub( r'![thumbnail:\1](\2-thumb.png)  [\1](\2)', markdown)
-        return markdown2
+        html = regex.sub(sub, html)
+        return html
 
