@@ -5,21 +5,22 @@
 Lorem markdownum foret et laedor, mansit sic laevi ut. Invita esset temptamenta
 transformat transformata inque. Ait **tum** eodem iterum piscis ab honore
 fallat, aura videnda. Menoeten sed pavet iubendo ut buxo restat ambiguum
-Theseus, concipit [irata opprobria](http://cur-cultros.net/) aut.
+Theseus, concipit [irata opprobria](https://www.thelatinlibrary.com/catullus.shtml) aut.
 
-- Sequi volenti vaticinos ille
-- Illa lutea tellus tecum discenda venerat corpus
-- Coniunx vivusque
-- Saturnus ademptas ecce ferunt hostibus unde Gorgonis
+
+
+* [one](one.pdf){ASDF}
+* *[two](two.pdf)*
+* *[three](three.pdf)*
 
 ## In sum aere parvo semper gratia licet
 
 Spina ministeriis trabes adductaque veniente aequora boves, verendus est usque,
 **emissumque bracchia**. Congreditur undis
-[nebulas](http://terebat-si.io/similis), templa? Urnaque his, ab nudos ultima,
-venit; a [Clitorio gemmae](http://www.semper.org/cernunt-iunonem.html),
+[nebulas](https://www.thelatinlibrary.com/catullus.shtml), templa? Urnaque his, ab nudos ultima,
+venit; a [Clitorio gemmae](https://www.thelatinlibrary.com/catullus.shtml),
 repetenda. Viridi una dolor remeabat totidem positis concipit nimium, utilis
-[una](http://dextra.net/) furta Perseus. Metior concentu ab umbra ut Theridamas
+[una](https://www.thelatinlibrary.com/catullus.shtml) furta Perseus. Metior concentu ab umbra ut Theridamas
 suis.
 
 ## Hoc nando
@@ -59,6 +60,6 @@ pati recenti ad. Tamen orbem nisi, villis, absumpsit nec Propoetides ex pennis;
 Fert non Fortuna carina gaudet; signa quaque sola vixque prope succrescere
 illic; Haec scilicet? Motis exul Sparte ventos in incidit dat. Laudat optabat
 accensum, ruitque sine maculoso Athenae. Nidis domos
-[audieris](http://eratcaesaris.net/) fugiens et, lux inpia iunctisque **bracchia
+[audieris](https://www.thelatinlibrary.com/catullus.shtml) fugiens et, lux inpia iunctisque **bracchia
 tolerare**. Haec videbitur fuissem est moenia stratis consiliis opportuna totum
 videtur, pervenit.

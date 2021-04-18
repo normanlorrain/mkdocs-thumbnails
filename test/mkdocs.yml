@@ -7,3 +7,7 @@ nav:
 
 plugins:
     - thumbnail-maker
+
+
+markdown_extensions:
+    - markdown.extensions.attr_list   # See here for more https://python-markdown.github.io/extensions/

@@ -10,32 +10,32 @@ import fitz
 from PIL import Image
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
+
+
+
 tmpThumb = str("tempfile.png")
 
-class Handout:
-    def __init__(self, filename):
-        print(filename)
-        self.filename = filename
-        self.name, _ = os.path.splitext(os.path.basename(filename))
-        self.thumb = f"{self.name}-thumb.png"
+def create(filename,target):        
+    print(filename)
+    filename = filename
+    name, _ = os.path.splitext(os.path.basename(filename))
+    thumb = target
 
-    def createTarget(self):
-        print("createTarget", self.name)
-        doc = fitz.open((self.filename))  # open document
-        pix = doc.getPagePixmap(0, alpha=False)  # render page to an image
 
-        # TODO - get in-memory conversion to work? png = pix.getPNGData() ; im = Image.fromarray(png)
-        pix.writePNG(tmpThumb)  # store image as a PNG
-        im = Image.open(tmpThumb)
+    # Extract image
+    doc = fitz.open((filename))  # open document
+    pix = doc.getPagePixmap(0, alpha=False)  # render page to an image
 
-        im.thumbnail((128, 128))
-        im.save(str(self.thumb))
-        os.remove(tmpThumb)
+    # TODO - get in-memory conversion to work? png = pix.getPNGData() ; im = Image.fromarray(png)
+    pix.writePNG(tmpThumb)  # store image as a PNG
 
-        pass
 
-    def __repr__(self):
-        return f"Handout:{self.name}"
+    # Resize image
+    im = Image.open(tmpThumb)
+
+    im.thumbnail((128, 128))
+    im.save(str(thumb))
+    os.remove(tmpThumb)
 
     pass
 
@@ -45,5 +45,4 @@ if __name__ == "__main__":
 
     for i in glob.glob("*.pdf"):
         print(i)
-        handout = Handout(i)
-        handout.createTarget()
+        create(i)
