@@ -10,6 +10,7 @@ from mkdocs.structure.files import File
 
 import re
 from pathlib import Path
+import urllib
 
 from . import thumbnail
 
@@ -62,7 +63,8 @@ class ThumbnailMaker(BasePlugin):
 
         targets = self.regexPDF.findall(html)
         for link, title in targets:
-            thumbnail.createPdfThumb(srcDir/Path(link), tgtDir/Path(link+"-thumb.png"))
+            filename = urllib.parse.unquote(link)
+            thumbnail.createPdfThumb(srcDir/Path(filename), tgtDir/Path(filename+"-thumb.png"))
         html = self.regexPDF.sub(self.subPDF, html)
 
         targets = self.regexYT.findall(html)
