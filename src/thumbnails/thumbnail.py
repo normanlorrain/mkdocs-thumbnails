@@ -30,6 +30,10 @@ def createPdfThumb(filename,thumb):
     im = Image.open(tmpThumb)
 
     im.thumbnail((128, 128))
+
+    if not thumb.parent.exists():
+        thumb.parent.mkdir(parents=True, exist_ok = True)
+
     im.save(str(thumb))
     os.remove(tmpThumb)
 
