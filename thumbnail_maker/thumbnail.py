@@ -9,13 +9,13 @@ import json
 import fitz
 from PIL import Image
 from jinja2 import Environment, FileSystemLoader, select_autoescape
-
+import urllib.request
 
 
 
 tmpThumb = str("tempfile.png")
 
-def create(filename,target):        
+def createPdfThumb(filename,target):        
     print(filename)
     filename = filename
     name, _ = os.path.splitext(os.path.basename(filename))
@@ -38,6 +38,19 @@ def create(filename,target):
     os.remove(tmpThumb)
 
     pass
+
+
+
+def createYouTubeThumb(id, target):
+    url = f'https://img.youtube.com/vi/{id}/default.jpg'
+    f = urllib.request.urlopen(url)
+    thumbnail =open(target,'wb')
+    thumbnail.write(f.read())
+    thumbnail.close()
+
+
+
+
 
 
 if __name__ == "__main__":

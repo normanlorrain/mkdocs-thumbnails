@@ -31,11 +31,12 @@ from . import thumbnail
 
 
 # Regex: look for "thumbnail" in attribute of a link
-regex=re.compile(r'<a.*?href=\"(.*?)\".*?id=\"THUMBNAIL\">(.*?)<\/a>')
+regexPDF=re.compile(r'<a.*?class=\"pdf\".*?href=\"(.*?)\".*?>(.*?)<\/a>')
 # Substitution:  
-sub = r'<a href="\1"><img src="\1-thumb.png" class="thumbnail" />\2</a>'
+subPDF = r'<a href="\1"><img src="\1-thumb.png" class="pdf" />\2</a>'
 
-
+regexYT = re.compile(r'<a.*?class=\"youtube\".*?href=\"(.*?\/(\w+))\".*?>(.*?)<\/a>')
+subYT = r'<a href="\1"><img src="\2-thumb.png" class="youtube" />\3</a>'
 # Style for this class goes into CSS.  e.g. style="margin-top:5px;margin-bottom:5px;margin-right:25px"
 
 
@@ -47,9 +48,16 @@ class ThumbnailMaker(BasePlugin):
         srcDir = Path(kwargs['page'].file.abs_src_path).parent
         tgtDir = Path(kwargs['page'].file.abs_dest_path).parent
 
-        targets = regex.findall(html)
+        targets = regexPDF.findall(html)
         for link, title in targets:
-            thumbnail.create(srcDir/Path(link), tgtDir/Path(link+"-thumb.png"))
-        html = regex.sub(sub, html)
+            thumbnail.createPdfThumb(srcDir/Path(link), tgtDir/Path(link+"-thumb.png"))
+        html = regexPDF.sub(subPDF, html)
+
+        targets = regexYT.findall(html)
+        for link, id, title in targets:
+            thumbnail.createYouTubeThumb(id, tgtDir/Path(id+"-thumb.png"))
+        html = regexYT.sub(subYT, html)
+
+
         return html
 

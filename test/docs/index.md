@@ -9,10 +9,10 @@ Theseus, concipit [irata opprobria](https://www.thelatinlibrary.com/catullus.sht
 
 
 
-* [one](one.pdf){#THUMBNAIL}
-* [two](two.pdf){#THUMBNAIL}
-* [three](three.pdf){#THUMBNAIL}
-
+* [one](one.pdf){.pdf}
+* [two](two.pdf){.pdf}
+* [three](three.pdf){.pdf}
+* [four](https://youtu.be/dQw4w9WgXcQ){.youtube}
 ## In sum aere parvo semper gratia licet
 
 Spina ministeriis trabes adductaque veniente aequora boves, verendus est usque,
@@ -22,6 +22,7 @@ venit; a [Clitorio gemmae](https://www.thelatinlibrary.com/catullus.shtml),
 repetenda. Viridi una dolor remeabat totidem positis concipit nimium, utilis
 [una](https://www.thelatinlibrary.com/catullus.shtml) furta Perseus. Metior concentu ab umbra ut Theridamas
 suis.
+
 
 ## Hoc nando
 
