@@ -30,7 +30,7 @@ setup(
     packages=find_packages(),
     entry_points={
         'mkdocs.plugins': [
-            'thumbnail-maker = mkdocs_thumbnail_maker.plugin:ThumbnailMaker'
+            'thumbnail-maker = thumbnail_maker.plugin:ThumbnailMaker'
         ]
     }
 )
