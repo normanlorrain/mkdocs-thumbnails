@@ -6,7 +6,9 @@ nav:
     - Home: index.md
 
 plugins:
-    - thumbnail-maker
+    - thumbnail-maker:
+        # CSS Syntax here. This gets put in the html style="" attribute of the thumbnail image.
+        #style: margin-top:5px;margin-bottom:5px;margin-right:25px 
 
 
 markdown_extensions:

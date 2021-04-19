@@ -30,33 +30,45 @@ from . import thumbnail
 # <a href="bar.pdf"><img src="bar.pdf-thumb.png" />foo</a> 
 
 
-# Regex: look for "thumbnail" in attribute of a link
-regexPDF=re.compile(r'<a.*?class=\"pdf\".*?href=\"(.*?)\".*?>(.*?)<\/a>')
-# Substitution:  
-subPDF = r'<a href="\1"><img src="\1-thumb.png" class="pdf" />\2</a>'
-
-regexYT = re.compile(r'<a.*?class=\"youtube\".*?href=\"(.*?\/(\w+))\".*?>(.*?)<\/a>')
-subYT = r'<a href="\1"><img src="\2-thumb.png" class="youtube" />\3</a>'
-# Style for this class goes into CSS.  e.g. style="margin-top:5px;margin-bottom:5px;margin-right:25px"
-
 
 
 
 class ThumbnailMaker(BasePlugin):
 
+    # style is added to the image tag.  e.g. margin-right:10px; 
+    config_scheme = ( ('style', config_options.Type(str, default="")), )
+
+    # build our regex for future on_page events
+    # At this point the user configuration is loaded and validated
+    def on_config( self, config, **kwargs):
+        # Regex: look for "thumbnail" in attribute of a link
+        self.regexPDF=re.compile(r'<a.*?class=\"pdf\".*?href=\"(.*?)\".*?>(.*?)<\/a>')
+        # Substitution:  
+        self.subPDF = r'<a href="\1"><img src="\1-thumb.png" class="pdf" style="{}" />\2</a>'.format(self.config['style'])
+
+        self.regexYT = re.compile(r'<a.*?class=\"youtube\".*?href=\"(.*?\/(\w+))\".*?>(.*?)<\/a>')
+        self.subYT = r'<a href="\1"><img src="\2-thumb.png" class="youtube" style="{}" />\3</a>'.format(self.config['style'])
+        # Style for this class goes into CSS.  e.g. style="margin-top:5px;margin-bottom:5px;margin-right:25px"
+
+        return config
+
+    # This is done for each page.  The markdown conversion has been done at this point.
+    # Modify the HTML to have the thumbnail when the relevant attribute is found
     def on_page_content(self, html, **kwargs):
+
+
         srcDir = Path(kwargs['page'].file.abs_src_path).parent
         tgtDir = Path(kwargs['page'].file.abs_dest_path).parent
 
-        targets = regexPDF.findall(html)
+        targets = self.regexPDF.findall(html)
         for link, title in targets:
             thumbnail.createPdfThumb(srcDir/Path(link), tgtDir/Path(link+"-thumb.png"))
-        html = regexPDF.sub(subPDF, html)
+        html = self.regexPDF.sub(self.subPDF, html)
 
-        targets = regexYT.findall(html)
+        targets = self.regexYT.findall(html)
         for link, id, title in targets:
             thumbnail.createYouTubeThumb(id, tgtDir/Path(id+"-thumb.png"))
-        html = regexYT.sub(subYT, html)
+        html = self.regexYT.sub(self.subYT, html)
 
 
         return html
