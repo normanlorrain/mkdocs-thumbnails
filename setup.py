@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 
 setup(
-    name='mkdocs-thumbnail-maker',
+    name='mkdocs-thumbnails',
     version='0.1.0',
     description='A MkDocs plugin.  Generates thumbnails for links in the markdown',
     long_description='',
@@ -11,9 +11,11 @@ setup(
     author='Norman Lorrain ',
     author_email='normanlorrain@gmail.com',
     license='MIT',
-    python_requires='>=2.7',
+    python_requires='>=3.6',
     install_requires=[
-        'mkdocs>=1.0.4'
+        'mkdocs>=1.0.4',
+        'Pillow>=8.2.0',
+        'PyMuPDF>=1.18.12'
     ],
     classifiers=[
         'Development Status :: 4 - Beta',
@@ -30,7 +32,7 @@ setup(
     packages=find_packages(),
     entry_points={
         'mkdocs.plugins': [
-            'thumbnail-maker = thumbnail_maker.plugin:ThumbnailMaker'
+            'thumbnails = thumbnails.plugin:ThumbnailMaker'
         ]
     }
 )
