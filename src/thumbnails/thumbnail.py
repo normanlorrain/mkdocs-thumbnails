@@ -16,11 +16,9 @@ import urllib.request
 tmpThumb = str("tempfile.png")
 
 def createPdfThumb(filename,thumb):        
-    print(filename)
-
     # Extract image
     doc = fitz.open(filename)  # open document
-    pix = doc.getPagePixmap(0, alpha=False)  # render page to an image
+    pix = doc.get_page_pixmap(0, alpha=False)  # render page to an image
 
     # TODO - get in-memory conversion to work? png = pix.getPNGData() ; im = Image.fromarray(png)
     pix.writePNG(tmpThumb)  # store image as a PNG
