@@ -11,33 +11,20 @@ from PIL import Image
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 import urllib.request
 
-
-
-tmpThumb = str("tempfile.png")
-
 def createPdfThumb(filename,thumb):        
     # Extract image
     doc = fitz.open(filename)  # open document
     pix = doc.get_page_pixmap(0, alpha=False)  # render page to an image
 
-    # TODO - get in-memory conversion to work? png = pix.getPNGData() ; im = Image.fromarray(png)
-    pix.writePNG(tmpThumb)  # store image as a PNG
-
-
     # Resize image
-    im = Image.open(tmpThumb)
-
+    im = Image.frombytes("RGB", (pix.width, pix.height), pix.samples)
+    im = im.crop((72,72,im.width-72,im.height-72))  # left, upper, right, and lower 
     im.thumbnail((128, 128))
 
     if not thumb.parent.exists():
         thumb.parent.mkdir(parents=True, exist_ok = True)
 
     im.save(str(thumb))
-    os.remove(tmpThumb)
-
-    pass
-
-
 
 def createYouTubeThumb(id, target):
     url = f'https://img.youtube.com/vi/{id}/default.jpg'
