@@ -33,12 +33,21 @@ More information about plugins in the [MkDocs documentation][mkdocs-plugins].
 
 
 ## Usage
-In the attribute list of a link, add `.pdf` or `.youtube` to turn on the thumbnail for that link.
-
+In the attribute list of a link, add `.pdf` or `.youtube` to turn on the thumbnail for that link:
 ```markdown
-# Some example markdown text
-
-* [My PDF file](foo.pdf){.pdf}
-* [A YouTube video link](https://youtu.be/dQw4w9WgXcQ){.youtube}
+[My PDF file](foo.pdf){.pdf}⸱⸱
+[A YouTube video link](https://youtu.be/dQw4w9WgXcQ){.youtube}⸱⸱  
 
 ```
+
+This generates the following HTML:
+```html
+<a href="foo.pdf"><img src="foo.pdf-thumb.png" class="pdf" >My PDF file</a>
+<br>
+<a href="https://youtu.be/dQw4w9WgXcQ"><img src="dQw4w9WgXcQ-thumb.png" class="youtube" >A YouTube video link</a>
+<br>
+```
+
+In the example above two spaces are added after each line, to force a markdown line break.
+
+
