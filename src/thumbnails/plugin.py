@@ -1,18 +1,14 @@
-import os
 import sys
-from timeit import default_timer as timer
-from datetime import datetime, timedelta
-
-from mkdocs import utils as mkdocs_utils
-from mkdocs.config import config_options, Config
-from mkdocs.plugins import BasePlugin
-from mkdocs.structure.files import File
-
 import re
-from pathlib import Path
 import urllib
+import itertools
+import logging
+from pathlib import Path
+from mkdocs.config import config_options
+from mkdocs.plugins import BasePlugin
 
 from . import thumbnail
+
 
 # Goal: have a means in our markdown to indicate the desire for PDF links 
 # to have a thumbnail, automatically generated.
@@ -31,13 +27,17 @@ from . import thumbnail
 # <a href="bar.pdf"><img src="bar.pdf-thumb.png" />foo</a> 
 
 
-
+spinner = itertools.cycle(['-', '\\', '|', '/'])
+log = logging.getLogger('mkdocs')
 
 
 class ThumbnailMaker(BasePlugin):
-
     # style is added to the image tag.  e.g. margin-right:10px; 
     config_scheme = ( ('style', config_options.Type(str, default="")), )
+
+    def on_pre_build(self, **kwargs):
+        self.pdf_count = 0
+        self.yt_count = 0
 
     # build our regex for future on_page events
     # At this point the user configuration is loaded and validated
@@ -57,21 +57,35 @@ class ThumbnailMaker(BasePlugin):
     # Modify the HTML to have the thumbnail when the relevant attribute is found
     def on_page_content(self, html, **kwargs):
 
-
+        sys.stdout.write('\b')            # erase the last written char
+        sys.stdout.write(next(spinner))   # write the next character
+        sys.stdout.flush()                # flush stdout buffer (actual character display)
+    
         srcDir = Path(kwargs['page'].file.abs_src_path).parent
         tgtDir = Path(kwargs['page'].file.abs_dest_path).parent
 
         targets = self.regexPDF.findall(html)
+        self.pdf_count+=len(targets)
         for link, title in targets:
+
             filename = urllib.parse.unquote(link)
             thumbnail.createPdfThumb(srcDir/Path(filename), tgtDir/Path(filename+"-thumb.png"))
         html = self.regexPDF.sub(self.subPDF, html)
 
         targets = self.regexYT.findall(html)
+        self.yt_count+=len(targets)
+
         for link, id, title in targets:
             thumbnail.createYouTubeThumb(id, tgtDir/Path(id+"-thumb.png"))
         html = self.regexYT.sub(self.subYT, html)
 
 
         return html
+
+    def on_post_build(self, **kwargs):
+        sys.stdout.write('\b')            # erase the last written char
+        sys.stdout.flush()                # flush stdout buffer (actual character display)
+
+        log.info(f"YouTube count: {self.yt_count}")
+        log.info(f"PDF count: { self.pdf_count}")
 

@@ -4,7 +4,7 @@ site_dir: ../test.site
 
 nav:
     - Home: index.md
-    - Section Two: section two/
+    - Section Two: section two/index.md
 
 plugins:
     - thumbnails:

@@ -11,9 +11,10 @@ from PIL import Image
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 import urllib.request
 
-def createPdfThumb(filename,thumb):        
+
+def createPdfThumb(inputPDFfile,outputThumbFile):        
     # Extract image
-    doc = fitz.open(filename)  # open document
+    doc = fitz.open(inputPDFfile)  # open document
     pix = doc.get_page_pixmap(0, alpha=False)  # render page to an image
 
     # Resize image
@@ -21,26 +22,22 @@ def createPdfThumb(filename,thumb):
     im = im.crop((72,72,im.width-72,im.height-72))  # left, upper, right, and lower 
     im.thumbnail((128, 128))
 
-    if not thumb.parent.exists():
-        thumb.parent.mkdir(parents=True, exist_ok = True)
+    # Create directory paths if necessary
+    if not outputThumbFile.parent.exists():
+        outputThumbFile.parent.mkdir(parents=True, exist_ok = True)
 
-    im.save(str(thumb))
+    # Save image to file
+    im.save(str(outputThumbFile))
 
-def createYouTubeThumb(id, target):
+def createYouTubeThumb(id, outputThumbFile):
+    # Get image from YouTube
     url = f'https://img.youtube.com/vi/{id}/default.jpg'
-    f = urllib.request.urlopen(url)
-    thumbnail =open(target,'wb')
-    thumbnail.write(f.read())
-    thumbnail.close()
+    thumbdata = urllib.request.urlopen(url)
+
+    # Save image 
+    with open(outputThumbFile,'wb') as outfile:
+        outfile.write(thumbdata.read())
+    
 
 
 
-
-
-
-if __name__ == "__main__":
-    print(os.curdir)
-
-    for i in glob.glob("*.pdf"):
-        print(i)
-        create(i)
