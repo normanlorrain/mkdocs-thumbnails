@@ -61,14 +61,19 @@ class ThumbnailMaker(BasePlugin):
         sys.stdout.write(next(spinner))   # write the next character
         sys.stdout.flush()                # flush stdout buffer (actual character display)
     
-        srcDir = Path(kwargs['page'].file.abs_src_path).parent
-        tgtDir = Path(kwargs['page'].file.abs_dest_path).parent
+        pageFile = kwargs['page'].file
+        srcDir = Path(pageFile.abs_src_path).parent
+        tgtDir = Path(pageFile.abs_dest_path).parent
 
         targets = self.regexPDF.findall(html)
         self.pdf_count+=len(targets)
         for link, title in targets:
 
             filename = urllib.parse.unquote(link)
+            if not (srcDir/Path(filename)).exists():
+                # Skip this file; mkdocs detects these already, so no need to log again.
+                continue
+
             thumbnail.createPdfThumb(srcDir/Path(filename), tgtDir/Path(filename+"-thumb.png"))
         html = self.regexPDF.sub(self.subPDF, html)
 
