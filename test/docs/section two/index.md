@@ -1,5 +1,5 @@
 # Section II
 
-* [two](two.pdf){.pdf}
+* [Section Two Example](two.pdf){.pdf}
 
 ## Hoc nando
