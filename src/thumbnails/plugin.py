@@ -1,8 +1,10 @@
 import sys
 import urllib
+import re
 import itertools
 import logging
 from pathlib import Path
+import urllib
 from mkdocs.config import config_options
 from mkdocs.plugins import BasePlugin
 from bs4 import BeautifulSoup
@@ -71,8 +73,13 @@ class ThumbnailMaker(BasePlugin):
         self.yt_count+=len(links)
         for link in links:
             href = link.get('href')
-            id = href[href.rfind('/')+1:]
-            thumbnail.createYouTubeThumb(id, tgtDir/Path(id+"-thumb.png"))
+            id = re.search( r'.*youtu.be\/(\w+).*', href).group(1)
+            try:
+                thumbnail.createYouTubeThumb(id, tgtDir/Path(id+"-thumb.png"))
+            except urllib.error.HTTPError as e:
+                log.warn(f'Bad Youtube link: {href} in {pageFile.abs_src_path} ')
+                continue
+
             
             img = soup.new_tag('img')
             img['src'] = f"{id}-thumb.png"
