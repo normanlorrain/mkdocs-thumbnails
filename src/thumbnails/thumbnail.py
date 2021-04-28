@@ -34,6 +34,10 @@ def createYouTubeThumb(id, outputThumbFile):
     url = f'https://img.youtube.com/vi/{id}/default.jpg'
     thumbdata = urllib.request.urlopen(url)
 
+    # Create directory paths if necessary
+    if not outputThumbFile.parent.exists():
+        outputThumbFile.parent.mkdir(parents=True, exist_ok = True)
+
     # Save image 
     with open(outputThumbFile,'wb') as outfile:
         outfile.write(thumbdata.read())
