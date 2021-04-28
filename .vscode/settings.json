@@ -1,7 +1,0 @@
-{
-    "python.pythonPath": ".venv\\Scripts\\python.exe",
-    "liveServer.settings.root": "D:\\github\\mkdocs-thumbnails\\test.site",
-    "liveServer.settings.ChromeDebuggingAttachment": false,
-    "liveServer.settings.AdvanceCustomBrowserCmdLine": ""
-    
-}
