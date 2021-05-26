@@ -69,11 +69,13 @@ class ThumbnailMaker(BasePlugin):
             link.contents.insert(0,img)
 
         # YouTube links
+        # See https://webapps.stackexchange.com/questions/54443/format-for-id-of-youtube-video
+        #
         links = soup.find_all("a", class_="youtube")
         self.yt_count+=len(links)
         for link in links:
             href = link.get('href')
-            id = re.search( r'.*youtu.be\/(\w+).*', href).group(1)
+            id = re.search( r'.*youtu.be\/([0-9A-Za-z_-]+).*', href).group(1)
             try:
                 thumbnail.createYouTubeThumb(id, tgtDir/Path(id+"-thumb.png"))
             except urllib.error.HTTPError as e:
