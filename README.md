@@ -45,7 +45,7 @@ The markdown conversion generates:
 ```html
 <a href="foo.pdf" class="pdf" >My PDF file</a>
 <br>
-<a href="https://youtu.be/dQw4w9WgXcQ">A YouTube video link</a>
+<a href="https://youtu.be/dQw4w9WgXcQ" class="youtube" >A YouTube video link</a>
 <br>
 ```
 
