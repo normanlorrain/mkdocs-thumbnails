@@ -75,12 +75,21 @@ class ThumbnailMaker(BasePlugin):
         self.yt_count+=len(links)
         for link in links:
             href = link.get('href')
-            id = re.search( r'.*youtu.be\/([0-9A-Za-z_-]+).*', href).group(1)
-            try:
-                thumbnail.createYouTubeThumb(id, tgtDir/Path(id+"-thumb.png"))
-            except urllib.error.HTTPError as e:
-                log.warn(f'Bad Youtube link: {href} in {pageFile.abs_src_path} ')
-                continue
+            if 'playlist' in href:
+                id = re.search( r'.*playlist\?list=([0-9A-Za-z_-]+).*', href).group(1)
+                try:
+                    thumbnail.createYouTubePlaylistThumb(href,tgtDir/Path(id+"-thumb.png"))
+                except urllib.error.HTTPError as e:
+                    log.warn(f'Bad Youtube link: {href} in {pageFile.abs_src_path} ')
+                    continue
+
+            else:
+                id = re.search( r'.*youtu.be\/([0-9A-Za-z_-]+).*', href).group(1)
+                try:
+                    thumbnail.createYouTubeThumb(id, tgtDir/Path(id+"-thumb.png"))
+                except urllib.error.HTTPError as e:
+                    log.warn(f'Bad Youtube link: {href} in {pageFile.abs_src_path} ')
+                    continue
 
             
             img = soup.new_tag('img')

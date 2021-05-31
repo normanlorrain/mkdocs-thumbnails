@@ -42,6 +42,22 @@ def createYouTubeThumb(id, outputThumbFile):
     with open(outputThumbFile,'wb') as outfile:
         outfile.write(thumbdata.read())
     
+# Playlists are a little harder; need to get the thumbnail via the oembed api
+def createYouTubePlaylistThumb(playlistUrl, outputThumbFile):
+    # Get image from YouTube
+    jsondata = urllib.request.urlopen(f'https://youtube.com/oembed?url={playlistUrl}&format=json').read()
+    playlistData = json.loads(jsondata)
+
+    thumbdata = urllib.request.urlopen(playlistData['thumbnail_url'])
+
+    # Create directory paths if necessary
+    if not outputThumbFile.parent.exists():
+        outputThumbFile.parent.mkdir(parents=True, exist_ok = True)
+
+    # Save image 
+    with open(outputThumbFile,'wb') as outfile:
+        outfile.write(thumbdata.read())
+    
 
 
 

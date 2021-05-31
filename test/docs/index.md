@@ -4,6 +4,7 @@
 [Landscape PDF](three.pdf){.pdf}  
 [Youtube Video](https://youtu.be/dQw4w9WgXcQ){.youtube}  
 [Youtube Video, id has non-word characters](https://youtu.be/-q9M7oJ9gkI){.youtube}  
+[Youtube playlist](https://www.youtube.com/playlist?list=PL59FEE129ADFF2B12){.youtube}
 
 ## Etc
 
