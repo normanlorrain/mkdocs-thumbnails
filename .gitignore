@@ -118,3 +118,4 @@ dmypy.json
 
 test.site/
 .vscode/
+test/http_cache.sqlite

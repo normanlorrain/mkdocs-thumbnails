@@ -6,6 +6,9 @@
 [Youtube Video, id has non-word characters](https://youtu.be/-q9M7oJ9gkI){.youtube}  
 [Youtube playlist](https://www.youtube.com/playlist?list=PL59FEE129ADFF2B12){.youtube}
 
+[Youtube Video, BAD LINK](https://youtu.be/BAD){.youtube}  
+[Youtube playlist, BAD LINK](https://www.youtube.com/playlist?list=BAD){.youtube}
+
 ## Etc
 
 Lorem markdownum foret et laedor, mansit sic laevi ut. Invita esset temptamenta
