@@ -52,7 +52,8 @@ class ThumbnailMaker(BasePlugin):
 
         soup = BeautifulSoup(html, "html.parser")
 
-        # PDF links
+        # PDF links.  For each link found with the "attribute" of "pdf", generate a thumbnail
+        # image and insert it into the HTML.
         links = soup.find_all("a", class_="pdf")
         self.pdf_count += len(links)
         for link in links:
@@ -68,7 +69,7 @@ class ThumbnailMaker(BasePlugin):
             img["style"] = self.config["style"]
             img["class"] = "pdf"
             del link["class"]
-            link.contents.insert(0, img)
+            link.insert(0, img)
 
         # YouTube links
         # See https://webapps.stackexchange.com/questions/54443/format-for-id-of-youtube-video
@@ -96,7 +97,7 @@ class ThumbnailMaker(BasePlugin):
             img["style"] = self.config["style"]
             img["class"] = "youtube"
             del link["class"]
-            link.contents.insert(0, img)
+            link.insert(0, img)
 
         return str(soup)
 
