@@ -1,4 +1,5 @@
 mkdocs
+beautifulsoup4
 pymupdf
 pillow
 requests-cache
