@@ -90,7 +90,7 @@ class ThumbnailMaker(BasePlugin):
                     id = re.search(r".*youtu.be\/([0-9A-Za-z_-]+).*", href).group(1)
                     thumbnail.createYouTubeThumb(id, tgtDir / Path(id + "-thumb.png"))
             except thumbnail.HTTPError as e:
-                log.warn(f"Bad Youtube link: {href} in {pageFile.abs_src_path} ")
+                log.warning(f"Bad Youtube link: {href} in {pageFile.abs_src_path} ")
                 continue
             img = soup.new_tag("img")
             img["src"] = f"{id}-thumb.png"
